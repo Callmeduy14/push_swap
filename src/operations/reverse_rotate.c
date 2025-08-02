@@ -1,21 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   reverse_rotate.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 13:03:53 by yyudi             #+#    #+#             */
-/*   Updated: 2025/07/27 13:03:54 by yyudi            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "../includes/push_swap.h"
 
-#include "push_swap.h"
-
-void	rra(t_stack **a)
+void	rra(t_stack **a, bool print)
 {
-	t_stack *last;
-	t_stack *prev;
+	t_stack	*last;
+	t_stack	*prev;
 
 	if (!*a || !(*a)->next)
 		return;
@@ -26,15 +14,18 @@ void	rra(t_stack **a)
 		last = last->next;
 	}
 	prev->next = NULL;
+	last->prev = NULL;
 	last->next = *a;
+	(*a)->prev = last;
 	*a = last;
-	write(1, "rra\n", 4);
+	if (print)
+		write(1, "rra\n", 4);
 }
 
-void	rrb(t_stack **b)
+void	rrb(t_stack **b, bool print)
 {
-	t_stack *last;
-	t_stack *prev;
+	t_stack	*last;
+	t_stack	*prev;
 
 	if (!*b || !(*b)->next)
 		return;
@@ -45,14 +36,17 @@ void	rrb(t_stack **b)
 		last = last->next;
 	}
 	prev->next = NULL;
+	last->prev = NULL;
 	last->next = *b;
+	(*b)->prev = last;
 	*b = last;
-	write(1, "rrb\n", 4);
+	if (print)
+		write(1, "rrb\n", 4);
 }
 
 void	rrr(t_stack **a, t_stack **b)
 {
-	rra(a);
-	rrb(b);
+	rra(a, false);
+	rrb(b, false);
 	write(1, "rrr\n", 4);
 }

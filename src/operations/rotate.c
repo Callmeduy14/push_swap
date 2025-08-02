@@ -1,50 +1,44 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 12:58:20 by yyudi             #+#    #+#             */
-/*   Updated: 2025/07/27 13:13:51 by yyudi            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "../includes/push_swap.h"
 
-#include "push_swap.h"
-
-void	ra(t_stack **a)
+void	ra(t_stack **a, bool print)
 {
-	t_stack *tmp;
-	t_stack *last;
+	t_stack	*first;
+	t_stack	*last;
 
 	if (!*a || !(*a)->next)
 		return;
-	tmp = *a;
+	first = *a;
 	*a = (*a)->next;
+	(*a)->prev = NULL;
 	last = stack_last(*a);
-	tmp->next = NULL;
-	last->next = tmp;
-	write(1, "ra\n", 3);
+	last->next = first;
+	first->prev = last;
+	first->next = NULL;
+	if (print)
+		write(1, "ra\n", 3);
 }
 
-void	rb(t_stack **b)
+void	rb(t_stack **b, bool print)
 {
-	t_stack *tmp;
-	t_stack *last;
+	t_stack	*first;
+	t_stack	*last;
 
 	if (!*b || !(*b)->next)
 		return;
-	tmp = *b;
+	first = *b;
 	*b = (*b)->next;
+	(*b)->prev = NULL;
 	last = stack_last(*b);
-	tmp->next = NULL;
-	last->next = tmp;
-	write(1, "rb\n", 3);
+	last->next = first;
+	first->prev = last;
+	first->next = NULL;
+	if (print)
+		write(1, "rb\n", 3);
 }
 
 void	rr(t_stack **a, t_stack **b)
 {
-	ra(a);
-	rb(b);
+	ra(a, false);
+	rb(b, false);
 	write(1, "rr\n", 3);
 }

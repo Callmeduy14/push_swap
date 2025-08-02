@@ -1,63 +1,26 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   math_utils.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 13:05:42 by yyudi             #+#    #+#             */
-/*   Updated: 2025/07/27 13:22:33 by yyudi            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "../includes/push_swap.h"
 
-#include "push_swap.h"
-
-int	 ft_atoi(const char *str)
-{
-	long	result;
-	int	 sign;
-
-	result = 0;
-	sign = 1;
-	while (*str == ' ' || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign = -1;
-		str++;
-	}
-	while (*str >= '0' && *str <= '9')
-	{
-		result = result * 10 + (*str - '0');
-		str++;
-	}
-	if (result * sign > INT_MAX || result * sign < INT_MIN)
-		error_exit(NULL, NULL);
-	return (result * sign);
-}
-
-bool is_sorted(t_stack *stack)  // Ubah tipe return dari int ke bool
+bool	is_sorted(t_stack *stack)
 {
 	while (stack && stack->next)
 	{
 		if (stack->value > stack->next->value)
-			return false;  // Gunakan false bukan 0
+			return (false);
 		stack = stack->next;
 	}
-	return true;  // Gunakan true bukan 1
+	return (true);
 }
 
-void	assign_index(t_stack *a)
+void	assign_index(t_stack *stack)
 {
-	t_stack *ptr;
-	t_stack *current;
-	int	 index;
+	t_stack	*ptr;
+	t_stack	*current;
+	int		index;
 
-	current = a;
+	current = stack;
 	while (current)
 	{
-		ptr = a;
+		ptr = stack;
 		index = 0;
 		while (ptr)
 		{
@@ -68,4 +31,32 @@ void	assign_index(t_stack *a)
 		current->index = index;
 		current = current->next;
 	}
+}
+
+int	get_min(t_stack *stack)
+{
+	int	min;
+
+	min = stack->value;
+	while (stack)
+	{
+		if (stack->value < min)
+			min = stack->value;
+		stack = stack->next;
+	}
+	return (min);
+}
+
+int	get_max(t_stack *stack)
+{
+	int	max;
+
+	max = stack->value;
+	while (stack)
+	{
+		if (stack->value > max)
+			max = stack->value;
+		stack = stack->next;
+	}
+	return (max);
 }
